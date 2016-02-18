@@ -71,6 +71,7 @@ if create_plot
     end
     
     % Plot
+    axes(plot_axis);
     plot(plot_axis,n_i,P_n,'r.','MarkerSize',10);
     title(plot_title);
     xlabel('n');
