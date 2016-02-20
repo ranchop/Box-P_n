@@ -50,7 +50,7 @@ end
 nxy_flat = nxy(:);  % Flatten the matrix
 
 % Create bins
-n_i = linspace(nmin, nmax, bins+1); % One additional bin for the end, will be removed later
+n_i = linspace(nmin, nmax, bins+1)'; % One additional bin for the end, will be removed later
 P_n = zeros(bins,1);
 
 whichbin = discretize(nxy_flat, n_i);
