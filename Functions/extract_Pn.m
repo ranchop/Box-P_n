@@ -31,6 +31,7 @@ plot_axis = nan;
 plot_title = 'P(n)';
 plot_nxy = 1;
 plot_nxy_pos = [.7 .7 .2 .2];
+n_i = [1];
 
 % Process inputs
 for i = 1:2:length(varargin)
@@ -43,6 +44,7 @@ for i = 1:2:length(varargin)
         case 'plot_title', plot_title = varargin{i+1};
         case 'plot_nxy', plot_nxy = varargin{i+1};
         case 'plot_nxy_pos', plot_nxy_pos = varargin{i+1};
+        case 'n_i', n_i = varargin{i+1};
     end
 end
 
@@ -50,15 +52,18 @@ end
 nxy_flat = nxy(:);  % Flatten the matrix
 
 % Create bins
-n_i = linspace(nmin, nmax, bins+1)'; % One additional bin for the end, will be removed later
-P_n = zeros(bins,1);
+if n_i(1) == 1
+    n_i = linspace(nmin, nmax, bins+1)'; % One additional bin for the end, will be removed later
+end
+P_n = zeros(length(n_i)-1,1);
 
 whichbin = discretize(nxy_flat, n_i);
-for i = 1:bins
+for i = 1:length(P_n)
     binMembers = nxy_flat(whichbin == i);
+    if isempty(binMembers), binMembers = 0; end
     P_n(i) = sum(binMembers);
 end
-n_i = n_i(1:end-1);
+n_i = n_i(1:end-1) + 0.5 * (n_i(2) - n_i(1));
 
 % Renormalize to total atom numbers
 P_n = P_n * (sum(nxy_flat)) / (sum(P_n)*(n_i(2)-n_i(1)));
