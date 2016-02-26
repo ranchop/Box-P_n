@@ -77,7 +77,7 @@ if create_plot
     
     % Plot
     axes(plot_axis);
-    plot(plot_axis,n_i,P_n,'b.','MarkerSize',14);
+    plot(plot_axis,n_i,P_n,'b-','MarkerSize',14);
     title(plot_title);
     xlabel('n');
     ylabel('# of atoms between n and n+dn');
@@ -86,7 +86,7 @@ if create_plot
     if plot_nxy
         % Inset
         axes('Position',plot_nxy_pos);
-        imagesc(nxy); 
+        imagesc(nxy); colormap gray; colorbar;
         axis off;
         axis image;
     end
