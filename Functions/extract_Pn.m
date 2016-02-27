@@ -77,7 +77,7 @@ if create_plot
     
     % Plot
     axes(plot_axis);
-    plot(plot_axis,n_i,P_n,'b-','MarkerSize',14);
+    plot(plot_axis,n_i,P_n,'b.','MarkerSize',14);
     title(plot_title);
     xlabel('n');
     ylabel('# of atoms between n and n+dn');
