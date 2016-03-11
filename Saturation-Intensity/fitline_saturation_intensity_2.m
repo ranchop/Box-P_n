@@ -15,17 +15,24 @@ function [alpha, OD_real, fitresult, gof] = fitline_saturation_intensity_2(ODc, 
 
 %% Process inputs
 plotset = {0};
+ODlim = [0 2];
 for i = 1:2:length(varargin)
     switch varargin{i}
         case 'plot', plotset = varargin{i+1};
+        case 'ODlim', ODlim = varargin{i+1};
     end
 end
 
 %% Fit: 'untitled fit 1'.
-[xData, yData] = prepareCurveData( ODc, DI );
-% yData = yData(xData<0.5);
-% xData = xData(xData<0.5);
+[xDataO, yDataO] = prepareCurveData( ODc, DI );
 
+% Threshold
+yData = yDataO(xDataO<= ODlim(2) & xDataO >= ODlim(1));
+xData = xDataO(xDataO<= ODlim(2) & xDataO >= ODlim(1));
+
+% Temporary
+xData = xDataO;
+yData = yDataO;
 
 % Set up fittype and options.
 ft = fittype( 'poly1' );
@@ -38,10 +45,12 @@ if plotset{1}
     if length(plotset)==2, axes(plotset{2});
     else figure;
     end
-    plot( sort(xData), fitresult(sort(xData)),'r-');
+    plot( sort(xDataO), fitresult(sort(xDataO)),'r-');
     hold on;
-    plot(xData, yData,'b*')
+    plot(xData, yData,'b.')
+    plot(xDataO,yDataO,'go');
     hold off;
+    
     % Label axes
     xlabel tODc
     ylabel tDI
